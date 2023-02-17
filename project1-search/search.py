@@ -94,16 +94,14 @@ def depthFirstSearch(problem):
     
     while len(frontier) != 0:
         node = frontier.pop()
-
+        path.append(node)
         if problem.isGoalState(node):
             return path
         if node not in expanded:
             expanded.append(node)
-            for child, direction in problem.getSuccessors(node):
+            for child in problem.getSuccessors(node):
                 frontier.append(child[0])
-                
-                path = allPaths.pop()
-                
+                                
     
     print("Start:", problem.getStartState())
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
