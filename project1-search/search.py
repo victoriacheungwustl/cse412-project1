@@ -87,12 +87,13 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    frontier = [problem.getStartState()]
-    expanded = []
-    path = []
+    #use stack 
+    frontier = util.Stack()  #frontier manages which states to expand 
+    frontier.push((problem.getStartState(), [])) #empty list represents path to goal state
+    expanded = []  # List to check whether state has already been visited
+    #path = []
   
-    
-    while len(frontier) != 0:
+    while len(frontier) != 0: 
         node = frontier.pop()
         path.append(node)
         if problem.isGoalState(node):
@@ -115,6 +116,8 @@ def breadthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
 
+    #queue 
+
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
@@ -131,6 +134,8 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
+
+    #priority queue 
 
 
 # Abbreviations
