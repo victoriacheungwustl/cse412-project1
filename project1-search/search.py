@@ -89,26 +89,30 @@ def depthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
     #use stack 
     frontier = util.Stack()  #frontier manages which states to expand 
-    frontier.push((problem.getStartState(), [])) #empty list represents path to goal state
-    expanded = []  # List to check whether state has already been visited
-    #path = []
+    frontier.push((problem.getStartState(), [])) #empty list represents list of directions to goal state node
+    expanded = []  # List to check whether state has already been visited/expanded
+    #path_to_node = []
   
-    while len(frontier) != 0: 
-        node = frontier.pop()
-        path.append(node)
+    while not frontier.isEmpty(): 
+       # node = frontier.pop()  #put the current node from frontier into node  
+        node, path_to_node = frontier.pop() #node is just the letter (A, B, etc), path_to_node is the list of directions
         if problem.isGoalState(node):
-            return path
+            return path_to_node
         if node not in expanded:
             expanded.append(node)
-            for child in problem.getSuccessors(node):
-                frontier.append(child[0])
-                                
-    
-    print("Start:", problem.getStartState())
-    print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
-    print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+            for child, direction in problem.getSuccessors(node):
+               # frontier.append(child[0])
+              # path_to_node.append(direction)   
+                path_to_child = path_to_node + [direction]
+                frontier.push((child, path_to_child))
+
+    return False
+
+    # print("Start:", problem.getStartState())
+    # print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+    # print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+    #Start's successors: [('B', '0:A->B', 1.0), ('C', '1:A->C', 2.0), ('D', '2:A->D', 4.0)]
     # util.raiseNotDefined()
-    return ['0']
 
 
 def breadthFirstSearch(problem):
