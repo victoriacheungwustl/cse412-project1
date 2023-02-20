@@ -118,14 +118,63 @@ def depthFirstSearch(problem):
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
 
-    #queue 
+     #USE A QUEUE 
+
+    frontier = util.Queue()  #frontier manages which states to expand 
+    frontier.push((problem.getStartState(), [])) #empty list represents list of directions to goal state node
+    expanded = []  # List to check whether state has already been visited/expanded
+    #path_to_node = []
+  
+    while not frontier.isEmpty(): 
+       # node = frontier.pop()  #put the current node from frontier into node  
+        node, path_to_node = frontier.pop() #node is just the letter (A, B, etc), path_to_node is the list of directions
+        if problem.isGoalState(node):
+            return path_to_node
+        if node not in expanded:
+            expanded.append(node)
+            for child, direction, cost in problem.getSuccessors(node):
+               # frontier.append(child[0])
+              # path_to_node.append(direction)   
+                path_to_child = path_to_node + [direction]
+                frontier.push((child, path_to_child))
+
+    return False
+
+
+
+    #util.raiseNotDefined()
+
+   
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    frontier = util.PriorityQueue()  #frontier manages which states to expand 
+    frontier.push((problem.getStartState(), []), 0) #empty list represents list of directions to goal state node
+    expanded = []  # List to check whether state has already been visited/expanded
+    #path_to_node = []
+  
+    while not frontier.isEmpty(): 
+       # node = frontier.pop()  #put the current node from frontier into node  
+        node, path_to_node = frontier.pop() #node is just the letter (A, B, etc), path_to_node is the list of directions
+        if problem.isGoalState(node):
+            return path_to_node
+        if node not in expanded:
+            expanded.append(node)
+            for child, direction, cost in problem.getSuccessors(node):
+               # frontier.append(child[0])
+              # path_to_node.append(direction)   
+                path_to_child = path_to_node + [direction]
+                frontier.push((child, path_to_child), cost)
+                cost = problem.getCostOfActions(path_to_child) 
+                if child not in expanded: 
+                    frontier.push(child, cost)
+                    path_to_node.append(cost)
+
+    return path_to_node
+   #  util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
     """
