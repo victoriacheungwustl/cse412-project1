@@ -100,7 +100,7 @@ def depthFirstSearch(problem):
             return path_to_node
         if node not in expanded:
             expanded.append(node)
-            for child, direction in problem.getSuccessors(node):
+            for child, direction, cost in problem.getSuccessors(node):
                # frontier.append(child[0])
               # path_to_node.append(direction)   
                 path_to_child = path_to_node + [direction]
