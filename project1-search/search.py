@@ -154,7 +154,6 @@ def uniformCostSearch(problem):
     frontier = util.PriorityQueue()  #frontier manages which states to expand 
     frontier.push((problem.getStartState(), []), 0) #empty list represents list of directions to goal state node
     expanded = []  # List to check whether state has already been visited/expanded
-    #path_to_node = []
   
     while not frontier.isEmpty(): 
        # node = frontier.pop()  #put the current node from frontier into node  
@@ -164,14 +163,9 @@ def uniformCostSearch(problem):
         if node not in expanded:
             expanded.append(node)
             for child, direction, cost in problem.getSuccessors(node):
-               # frontier.append(child[0])
-              # path_to_node.append(direction)   
                 path_to_child = path_to_node + [direction]
-                frontier.push((child, path_to_child), cost)
-                cost = problem.getCostOfActions(path_to_child) 
-                if child not in expanded: 
-                    frontier.push(child, cost)
-                    path_to_node.append(cost)
+                gottenCost = problem.getCostOfActions(path_to_child) 
+                frontier.push((child, path_to_child), cost + gottenCost)
 
     return path_to_node
    #  util.raiseNotDefined()
@@ -183,10 +177,29 @@ def nullHeuristic(state, problem=None):
     """
     return 0
 
+
+
+
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    frontier = util.PriorityQueue()  #frontier manages which states to expand 
+    frontier.push((problem.getStartState(), [], 0), 0) #empty list represents list of directions to goal state node
+    expanded = []  # List to check whether state has already been visited/expanded
+  
+    while not frontier.isEmpty(): 
+        node, path_to_node, current_cost = frontier.pop() #node is just the letter (A, B, etc), path_to_node is the list of directions
+        if problem.isGoalState(node):
+            return path_to_node
+        if node not in expanded:
+            expanded.append(node)
+            # maybe have a list of cumulative successors that have not been checked yet?
+            # allSuccessors.push(problem.getSuccessors(node))
+            for child, direction, cost in problem.getSuccessors(node):
+                path_to_child = path_to_node + [direction]
+                gottenCost = problem.getCostOfActions(path_to_child)  + heuristic(child, problem)
+                frontier.push((child, path_to_child, current_cost + cost), current_cost + cost + heuristic(child, problem))
+                   
+    return path_to_node
 
     #priority queue 
 
