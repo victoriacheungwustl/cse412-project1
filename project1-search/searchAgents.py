@@ -499,17 +499,19 @@ def foodHeuristic(state, problem):
     problem.heuristicInfo['wallCount']
     """
     position, foodGrid = state
+    foodGridList = foodGrid.asList()
     foodPlaces = []
     allHeuristicValues = [0]
     heuristic = 0
 
-    foodList = foodGrid.asList()
-    for i in foodList:
-        if i == True:
-            foodPlaces.append(i)
+
+
+    for i in foodGridList:
+        foodPlaces.append(i)
+    
         
     for food in foodPlaces:
-        allHeuristicValues.append(euclideanHeuristic(position, food))
+        allHeuristicValues.append(mazeDistance(position, food, problem.startingGameState))
         heuristic = max(allHeuristicValues)
         
     return heuristic
