@@ -339,8 +339,8 @@ class CornersProblem(search.SearchProblem):
             "*** YOUR CODE HERE ***"
             #return list that contains all of successors 
             #check if corner is in the corners list and if it is, add it to the second element list
-
-            x,y = currentPosition
+            x,y = state[0]
+            #x,y = currentPosition
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
             hitsWall = self.walls[nextx][nexty]
@@ -385,7 +385,7 @@ def cornersHeuristic(state, problem):
 
     This function should always return a number that is a lower bound on the
     shortest path from the state to a goal of the problem; i.e.  it should be
-    admissible (as well as consistent).
+    admissible (as well as consistent).wait
     """
     corners = problem.corners # These are the corner coordinates
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
