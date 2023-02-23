@@ -152,7 +152,7 @@ def uniformCostSearch(problem):
     "*** YOUR CODE HERE ***"
 
     frontier = util.PriorityQueue()  #frontier manages which states to expand 
-    frontier.push((problem.getStartState(), []), 0) #empty list represents list of directions to goal state node
+    frontier.push((problem.getStartState(), []), 0) #empty list represents list of directions to goal state node, 0 is the priority
     expanded = []  # List to check whether state has already been visited/expanded
   
     while not frontier.isEmpty(): 
@@ -165,7 +165,7 @@ def uniformCostSearch(problem):
             for child, direction, cost in problem.getSuccessors(node):
                 path_to_child = path_to_node + [direction]
                 gottenCost = problem.getCostOfActions(path_to_child) 
-                frontier.push((child, path_to_child), cost + gottenCost)
+                frontier.push((child, path_to_child), cost + gottenCost) 
 
     return path_to_node
    #  util.raiseNotDefined()

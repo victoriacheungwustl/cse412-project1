@@ -288,6 +288,7 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
+        self.startingGameState = startingGameState
 
     def getStartState(self):
         """
@@ -295,16 +296,27 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+       # util.raiseNotDefined()
+        startingPosition = self.startingPosition
+        return (startingPosition, []) 
+        #state has 2 elements
+        #list to hold visited corners
+        #starting position is the x and y starting coordinated of pacman
 
-    def isGoalState(self, state):
+    def isGoalState(self, state): #aka checking if we have visited every corner
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        visitedCorners = state[1]
+        if (len(visitedCorners) == 4):
+            return True
+        return False
+        #util.raiseNotDefined()
 
-    def getSuccessors(self, state):
+    def getSuccessors(self, state):  
+
+
         """
         Returns successor states, the actions they require, and a cost of 1.
 
@@ -325,6 +337,25 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
+            #return list that contains all of successors 
+            #check if corner is in the corners list and if it is, add it to the second element list
+
+            x,y = currentPosition
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            hitsWall = self.walls[nextx][nexty]
+
+            visitedCorners = state[1]
+
+            if not hitsWall:
+                successorCorners = list(visitedCorners) 
+                next_node = (nextx, nexty)  #next node is a tuple of the next x and y coordinates
+                if next_node in self.corners: 
+                    if not next_node in successorCorners: 
+                        successorCorners.append(next_node)
+                #create a successor, which is a list of triples (sucessor, action, stepcost)
+                successor = ((next_node, successorCorners), action, 1) 
+                successors.append(successor) 
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
